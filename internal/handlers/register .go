@@ -4,7 +4,6 @@ import (
 	"errors"
 	"finance/database"
 	"finance/models"
-	"fmt"
 	"log"
 
 	"github.com/gofiber/fiber/v3"
@@ -25,17 +24,6 @@ func hashPassword(data map[string]string, cost int) ([]byte, error) {
 }
 
 // when they log in
-func compareHashedPassword(data map[string]string, user models.User) error {
-	if _, ok := data["password"]; !ok {
-		return errors.New("password key not found in map")
-	}
-
-	if err := bcrypt.CompareHashAndPassword(user.Password, []byte(data["password"])); err != nil {
-		return fmt.Errorf("Passwords do not match")
-	}
-
-	return nil
-}
 
 func HandleRegister(c fiber.Ctx) error {
 	var data map[string]string

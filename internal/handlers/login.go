@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"errors"
 	"finance/database"
 	"finance/models"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -10,7 +12,20 @@ import (
 
 	"github.com/gofiber/fiber/v3"
 	"github.com/golang-jwt/jwt/v5"
+	"golang.org/x/crypto/bcrypt"
 )
+
+func compareHashedPassword(data map[string]string, user models.User) error {
+	if _, ok := data["password"]; !ok {
+		return errors.New("password key not found in map")
+	}
+
+	if err := bcrypt.CompareHashAndPassword(user.Password, []byte(data["password"])); err != nil {
+		return fmt.Errorf("Passwords do not match")
+	}
+
+	return nil
+}
 
 func HandleLogin(c fiber.Ctx) error {
 	var data map[string]string
