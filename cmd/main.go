@@ -14,6 +14,7 @@ func main() {
 	database.ConnectDB()
 
 	app := fiber.New()
+	// protected := app.Group("/protected", middleware.CheckAuth)
 
 	app.Use(cors.New(cors.Config{
 		AllowCredentials: true,
