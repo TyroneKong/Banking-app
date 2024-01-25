@@ -21,5 +21,6 @@ func ConnectDB() {
 	DB = connection
 
 	connection.AutoMigrate(&models.User{})
+	connection.AutoMigrate(&models.Budget{})
 
 }
