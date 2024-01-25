@@ -23,16 +23,16 @@ func hashPassword(data map[string]string, cost int) ([]byte, error) {
 	return hashedPassword, nil
 }
 
+// when they log in
 func compareHashedPassword(data map[string]string, user models.User) error {
 	if _, ok := data["password"]; !ok {
 		return errors.New("password key not found in map")
 	}
 
-	err := bcrypt.CompareHashAndPassword(user.Password, []byte(data["password"]))
-
-	if err != nil {
+	if err := bcrypt.CompareHashAndPassword(user.Password, []byte(data["password"])); err != nil {
 		return fmt.Errorf("Passwords do not match")
 	}
+
 	return nil
 }
 
