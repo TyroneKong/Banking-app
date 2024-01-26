@@ -9,6 +9,27 @@ import (
 	"finance/internal/handlers"
 )
 
+func setupRoutes(app *fiber.App) {
+
+	app.Use(cors.New(cors.Config{
+		AllowCredentials: true,
+		AllowOrigins:     "http://localhost:3000",
+		AllowMethods:     "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+		AllowHeaders:     "Origin, Content-Type, Accept",
+	}))
+
+	app.Post("/api/register", handlers.HandleRegister)
+	app.Post("/api/login", handlers.HandleLogin)
+	app.Get("/api/user/:id", handlers.HandleGetUser)
+	app.Get("/api/currentUser", handlers.HandleGetCurrentUser)
+	app.Post("/api/createTransaction", handlers.HandleCreateTransaction)
+	app.Post("/api/createExpense", handlers.HandleCreateExpense)
+	app.Get("/api/allTransactions", handlers.HandleGetAllTransactions)
+	app.Get("/api/allExpenses", handlers.HandleGetAllExpenses)
+	app.Listen(":3001")
+
+}
+
 func main() {
 
 	database.ConnectDB()
@@ -16,18 +37,6 @@ func main() {
 	app := fiber.New()
 	// protected := app.Group("/protected", middleware.CheckAuth)
 
-	app.Use(cors.New(cors.Config{
-		AllowCredentials: true,
-		AllowOrigins:     "http://localhost:5173",
-		AllowMethods:     "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-		AllowHeaders:     "Origin, Content-Type, Accept",
-	}))
-
-	app.Get("/", func(c fiber.Ctx) error { return c.JSON("welcome to my server") })
-	app.Post("/register", handlers.HandleRegister)
-	app.Post("/login", handlers.HandleLogin)
-	app.Post("/createDeposit", handlers.HandleCreateDeposit)
-	app.Post("/createWithdraw", handlers.HandleWithdrawal)
-	app.Listen(":3001")
+	setupRoutes(app)
 
 }

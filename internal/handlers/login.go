@@ -47,9 +47,9 @@ func HandleLogin(c fiber.Ctx) error {
 		})
 	}
 
-	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"issuer":    strconv.Itoa(int(user.ID)),
-		"expiresAt": time.Now().Add(time.Hour * 24).Unix(),
+	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.RegisteredClaims{
+		Issuer:    strconv.Itoa(int(user.ID)),
+		ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24)),
 	})
 
 	token, err := claims.SignedString([]byte(os.Getenv("API_SECRET")))
@@ -72,5 +72,6 @@ func HandleLogin(c fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{
 		"message": "success",
+		"user":    user,
 	})
 }

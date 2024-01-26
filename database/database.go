@@ -21,7 +21,7 @@ func ConnectDB() {
 	DB = connection
 
 	connection.AutoMigrate(&models.User{})
-	connection.AutoMigrate(&models.Deposit{})
-	connection.AutoMigrate(&models.Withdraw{})
+	connection.AutoMigrate(&models.Transaction{})
+	connection.AutoMigrate(&models.Expense{})
 
 }
