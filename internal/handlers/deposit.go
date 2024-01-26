@@ -27,24 +27,28 @@ func HandleCreateDeposit(c fiber.Ctx) error {
 	}
 
 	var totalAmount float64
+	var user models.Deposit
+
+	database.DB.First(&user, "user_Id = ?", data["userId"])
+
+	log.Println("user", user)
 
 	database.DB.Table("deposits").Where("user_Id = ?", data["userId"]).Group("user_Id").Pluck("SUM(amount)", &totalAmount)
-	log.Println("total amount", totalAmount)
 
 	amountString := data["amount"]
 
 	amount, _ := strconv.ParseFloat(amountString, 64)
-
+	log.Println("total amount", totalAmount+amount)
 	deposit := models.Deposit{
-		UserID:   data["userId"],
-		Name:     data["name"],
-		Amount:   amount + totalAmount,
-		Currency: data["currency"],
+		UserID:      data["userId"],
+		Name:        data["name"],
+		Amount:      amount,
+		Currency:    data["currency"],
+		TotalAmount: totalAmount + amount,
 	}
 
-	log.Println("here is the Deposit", deposit)
-	newDeposit := NewDeposit(deposit.UserID, deposit.Name, deposit.Amount, deposit.Currency)
+	// newDeposit := NewDeposit(deposit.UserID, deposit.Name, deposit.Amount, deposit.Currency)
 
-	database.DB.Create(newDeposit)
-	return c.JSON(newDeposit)
+	database.DB.Create(&deposit)
+	return c.JSON(deposit)
 }
