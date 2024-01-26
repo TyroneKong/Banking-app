@@ -28,6 +28,14 @@ func HandleWithdrawal(c fiber.Ctx) error {
 
 	amount, _ := strconv.ParseFloat(amountString, 64)
 
+	if totalAmount < amount {
+
+		return c.JSON(fiber.Map{
+			"message": "not enough funds",
+		})
+
+	}
+
 	withdraw := models.Withdraw{
 		UserID:      data["userId"],
 		Name:        data["name"],
