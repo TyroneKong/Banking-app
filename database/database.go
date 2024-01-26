@@ -22,5 +22,6 @@ func ConnectDB() {
 
 	connection.AutoMigrate(&models.User{})
 	connection.AutoMigrate(&models.Deposit{})
+	connection.AutoMigrate(&models.Withdraw{})
 
 }

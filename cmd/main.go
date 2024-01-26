@@ -27,7 +27,7 @@ func main() {
 	app.Post("/register", handlers.HandleRegister)
 	app.Post("/login", handlers.HandleLogin)
 	app.Post("/createDeposit", handlers.HandleCreateDeposit)
-
+	app.Post("/createWithdraw", handlers.HandleWithdrawal)
 	app.Listen(":3001")
 
 }

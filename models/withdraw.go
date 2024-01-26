@@ -2,13 +2,12 @@ package models
 
 import "time"
 
-type Deposit struct {
+type Withdraw struct {
 	UserID      string    `gorm:"not null" json:"user_id"`
 	Name        string    `gorm:"not null" json:"name"`
-	Amount      float64   `gorm:"not null" json:"deposit_amount"`
+	Amount      float64   `gorm:"not null" json:"withdrawl_amount"`
 	Currency    string    `gorm:"not null" json:"currency"`
-	TotalAmount float64   `gorm:"not null" json:"total_Amount"`
-	Withdrawal  float64   `gorm:"not null" json:"withdrawl_amount"`
+	TotalAmount float64   `gorm:"not null" json:"total_amount"`
 	CreateDate  time.Time `gorm:"autoCreateTime" json:"createdate"`
 	UpdateAt    time.Time `gorm:"autoUpdateTime" json:"updateat"`
 }
