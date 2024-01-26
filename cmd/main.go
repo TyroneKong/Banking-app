@@ -26,7 +26,7 @@ func main() {
 	app.Get("/", func(c fiber.Ctx) error { return c.JSON("welcome to my server") })
 	app.Post("/register", handlers.HandleRegister)
 	app.Post("/login", handlers.HandleLogin)
-	app.Post("/createBudget", handlers.HandleCreateDeposit)
+	app.Post("/createDeposit", handlers.HandleCreateDeposit)
 
 	app.Listen(":3001")
 
