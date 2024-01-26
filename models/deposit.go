@@ -3,6 +3,7 @@ package models
 import "time"
 
 type Deposit struct {
+	ID          uint      `gorm:"primaryKey;autoIncrement"`
 	UserID      string    `gorm:"not null" json:"user_id"`
 	Name        string    `gorm:"not null" json:"name"`
 	Amount      float64   `gorm:"not null" json:"deposit_amount"`

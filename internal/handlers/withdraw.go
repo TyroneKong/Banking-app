@@ -3,6 +3,7 @@ package handlers
 import (
 	"finance/database"
 	"finance/models"
+	"log"
 	"strconv"
 
 	"github.com/gofiber/fiber/v3"
@@ -21,7 +22,7 @@ func HandleWithdrawal(c fiber.Ctx) error {
 
 	database.DB.First(&user, "user_id = ?", data["userId"])
 
-	database.DB.Table("deposits").Where("user_Id = ?", data["userId"]).Group("user_Id").Pluck("SUM(amount)", &totalAmount)
+	database.DB.Table("deposits").Select("total_amount").Where("user_Id = ?", data["userId"]).Scan(&totalAmount)
 
 	amountString := data["amount"]
 
@@ -34,6 +35,8 @@ func HandleWithdrawal(c fiber.Ctx) error {
 		Currency:    data["currencyy"],
 		TotalAmount: totalAmount - amount,
 	}
+
+	log.Println(totalAmount)
 
 	//update deposits table
 	deposit := models.Deposit{

@@ -38,7 +38,6 @@ func HandleCreateDeposit(c fiber.Ctx) error {
 	amountString := data["amount"]
 
 	amount, _ := strconv.ParseFloat(amountString, 64)
-	log.Println("total amount", totalAmount+amount)
 	deposit := models.Deposit{
 		UserID:      data["userId"],
 		Name:        data["name"],
