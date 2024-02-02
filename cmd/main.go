@@ -26,6 +26,8 @@ func setupRoutes(app *fiber.App) {
 	app.Post("/api/createExpense", handlers.HandleCreateExpense)
 	app.Get("/api/allTransactions", handlers.HandleGetAllTransactions)
 	app.Get("/api/allExpenses", handlers.HandleGetAllExpenses)
+	app.Post("/api/createBudget", handlers.HandleCreateBudget)
+	app.Get("/api/allBudgets", handlers.HandleGetAllBudgets)
 	app.Listen(":3001")
 
 }

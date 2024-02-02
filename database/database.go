@@ -23,5 +23,6 @@ func ConnectDB() {
 	connection.AutoMigrate(&models.User{})
 	connection.AutoMigrate(&models.Transaction{})
 	connection.AutoMigrate(&models.Expense{})
+	connection.AutoMigrate(&models.Budget{})
 
 }
